@@ -14,8 +14,7 @@ export function TimedMode() {
     const [feedback, setFeedback] = useState<{ type: "correct" | "incorrect"; message: string } | null>(null);
 
     const inputRef = useRef<HTMLInputElement>(null);
-
-    const [usedPlayerIds, setUsedPlayerIds] = useState<Set<string>>(new Set());
+    const usedPlayerIdsRef = useRef<Set<string>>(new Set());
 
     useEffect(() => {
         let interval: any = null;
@@ -35,8 +34,8 @@ export function TimedMode() {
         setTimeLeft(60);
         setIsActive(true);
         setIsGameOver(false);
-        setUsedPlayerIds(new Set());
-        loadNewPlayer(new Set());
+        usedPlayerIdsRef.current = new Set();
+        loadNewPlayer();
         setTimeout(() => inputRef.current?.focus(), 100);
     };
 
@@ -66,22 +65,21 @@ export function TimedMode() {
         }
     };
 
-    const loadNewPlayer = (currentUsedIds?: Set<string>) => {
-        const idsToExclude = currentUsedIds || usedPlayerIds;
+    const loadNewPlayer = () => {
         const difficulty = pickRandomDifficulty();
 
         // Filter players that haven't been used
-        const availablePlayers = allPlayers.filter(p => !idsToExclude.has(p.name + p.college)); // using name+college as unique key since no ID
+        const availablePlayers = allPlayers.filter(p => !usedPlayerIdsRef.current.has(p.name + p.college));
 
         // If we ran out of players (unlikely), reset used list
         if (availablePlayers.length === 0) {
             const player = pickRandomPlayer(allPlayers, difficulty);
             setCurrentPlayer(player);
-            setUsedPlayerIds(new Set([player.name + player.college]));
+            usedPlayerIdsRef.current = new Set([player.name + player.college]);
         } else {
             const player = pickRandomPlayer(availablePlayers, difficulty);
             setCurrentPlayer(player);
-            setUsedPlayerIds(prev => new Set(prev).add(player.name + player.college));
+            usedPlayerIdsRef.current.add(player.name + player.college);
         }
 
         setGuess("");
