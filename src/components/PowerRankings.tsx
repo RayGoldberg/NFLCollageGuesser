@@ -77,7 +77,11 @@ export function PowerRankings({ userId, onClose }: { userId: string; onClose: ()
             }
 
             // 3. Combine and sort
-            const allRankings = [myEntry, ...friendsEntries].sort((a, b) => b.timed_highscore - a.timed_highscore);
+            const allRankings = [myEntry, ...friendsEntries]
+                .filter((rank, index, self) =>
+                    index === self.findIndex((t) => t.id === rank.id)
+                )
+                .sort((a, b) => b.timed_highscore - a.timed_highscore);
             setRankings(allRankings);
 
         } catch (error) {

@@ -99,7 +99,11 @@ export function FriendsList({ userId }: { userId: string }) {
                         };
                     })
                 );
-                setFriends(processedFriends);
+                // Deduplicate by ID
+                const uniqueFriends = processedFriends.filter((friend, index, self) =>
+                    index === self.findIndex((t) => t.id === friend.id)
+                );
+                setFriends(uniqueFriends);
             }
         } catch (error) {
             console.error('Error fetching friends:', error);
