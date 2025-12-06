@@ -52,7 +52,10 @@ export function FriendsList({ userId }: { userId: string }) {
                 .eq('status', 'pending');
 
             if (error) throw error;
-            setRequests(data || []);
+            setRequests((data || []).map((item: any) => ({
+                id: item.id,
+                user: Array.isArray(item.user) ? item.user[0] : item.user
+            })));
         } catch (error) {
             console.error('Error fetching requests:', error);
         }
@@ -130,7 +133,7 @@ export function FriendsList({ userId }: { userId: string }) {
                 .from('friends')
                 .select('id')
                 .or(`and(user_id.eq.${userId},friend_id.eq.${users.id}),and(user_id.eq.${users.id},friend_id.eq.${userId})`)
-                .single();
+                .maybeSingle();
 
             if (existing) throw new Error('Friendship request already exists or you are already friends');
 
