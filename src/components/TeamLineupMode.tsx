@@ -11,7 +11,6 @@ export function TeamLineupMode() {
   const [guesses, setGuesses] = useState<Record<string, string>>({});
   const [slotResults, setSlotResults] = useState<Record<string, { correct: boolean; correctCollege: string }>>({});
   const [score, setScore] = useState(0);
-  const [lineupsCompleted, setLineupsCompleted] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalSlots, setTotalSlots] = useState(0);
   const [hasChecked, setHasChecked] = useState(false);
@@ -40,7 +39,7 @@ export function TeamLineupMode() {
     selectedTeam.offense.forEach((slot: LineupSlot) => {
       const guess = guesses[slot.position] || "";
       const correct = isCorrectCollege(guess, slot.player);
-      
+
       results[slot.position] = {
         correct,
         correctCollege: slot.player.college,
@@ -54,7 +53,6 @@ export function TeamLineupMode() {
 
     setSlotResults(results);
     setScore(prev => prev + pointsEarned);
-    setLineupsCompleted(prev => prev + 1);
     setTotalCorrect(prev => prev + correctCount);
     setTotalSlots(prev => prev + selectedTeam.offense.length);
     setHasChecked(true);
@@ -157,10 +155,10 @@ export function TeamLineupMode() {
       )}
 
       {/* Overall Scoreboard */}
-      <ScoreBoard 
-        score={score} 
-        totalQuestions={totalSlots} 
-        correctCount={totalCorrect} 
+      <ScoreBoard
+        score={score}
+        totalQuestions={totalSlots}
+        correctCount={totalCorrect}
       />
     </div>
   );
