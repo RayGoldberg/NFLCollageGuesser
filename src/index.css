@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import pixel art font for Retro Bowl theme */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  line-height: 1.6;
+  font-weight: 400;
+
+  color-scheme: dark;
+  color: #ffffff;
+  background-color: #1a1a2e;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  /* Pixel-art football field background */
+  background-color: #2d5016;
+  background-image:
+    /* Yard lines - major lines every 10 yards */
+    repeating-linear-gradient(90deg,
+      transparent 0px,
+      transparent calc(10% - 2px),
+      rgba(255, 255, 255, 0.9) calc(10% - 2px),
+      rgba(255, 255, 255, 0.9) 10%,
+      transparent 10%,
+      transparent calc(20% - 2px),
+      rgba(255, 255, 255, 0.9) calc(20% - 2px),
+      rgba(255, 255, 255, 0.9) 20%,
+      transparent 20%,
+      transparent calc(30% - 2px),
+      rgba(255, 255, 255, 0.9) calc(30% - 2px),
+      rgba(255, 255, 255, 0.9) 30%,
+      transparent 30%,
+      transparent calc(40% - 2px),
+      rgba(255, 255, 255, 0.9) calc(40% - 2px),
+      rgba(255, 255, 255, 0.9) 40%,
+      transparent 40%,
+      transparent calc(50% - 2px),
+      rgba(255, 255, 255, 1) calc(50% - 2px),
+      rgba(255, 255, 255, 1) calc(50% + 2px),
+      transparent calc(50% + 2px),
+      transparent calc(60% - 2px),
+      rgba(255, 255, 255, 0.9) calc(60% - 2px),
+      rgba(255, 255, 255, 0.9) 60%,
+      transparent 60%,
+      transparent calc(70% - 2px),
+      rgba(255, 255, 255, 0.9) calc(70% - 2px),
+      rgba(255, 255, 255, 0.9) 70%,
+      transparent 70%,
+      transparent calc(80% - 2px),
+      rgba(255, 255, 255, 0.9) calc(80% - 2px),
+      rgba(255, 255, 255, 0.9) 80%,
+      transparent 80%,
+      transparent calc(90% - 2px),
+      rgba(255, 255, 255, 0.9) calc(90% - 2px),
+      rgba(255, 255, 255, 0.9) 90%,
+      transparent 90%,
+      transparent 100%),
+    /* Hash marks - small vertical lines */
+    repeating-linear-gradient(90deg,
+      transparent 0px,
+      transparent calc(5% - 1px),
+      rgba(255, 255, 255, 0.4) calc(5% - 1px),
+      rgba(255, 255, 255, 0.4) calc(5% + 1px),
+      transparent calc(5% + 1px),
+      transparent calc(15% - 1px),
+      rgba(255, 255, 255, 0.4) calc(15% - 1px),
+      rgba(255, 255, 255, 0.4) calc(15% + 1px),
+      transparent calc(15% + 1px),
+      transparent calc(25% - 1px),
+      rgba(255, 255, 255, 0.4) calc(25% - 1px),
+      rgba(255, 255, 255, 0.4) calc(25% + 1px),
+      transparent calc(25% + 1px),
+      transparent calc(35% - 1px),
+      rgba(255, 255, 255, 0.4) calc(35% - 1px),
+      rgba(255, 255, 255, 0.4) calc(35% + 1px),
+      transparent calc(35% + 1px),
+      transparent calc(45% - 1px),
+      rgba(255, 255, 255, 0.4) calc(45% - 1px),
+      rgba(255, 255, 255, 0.4) calc(45% + 1px),
+      transparent calc(45% + 1px),
+      transparent calc(55% - 1px),
+      rgba(255, 255, 255, 0.4) calc(55% - 1px),
+      rgba(255, 255, 255, 0.4) calc(55% + 1px),
+      transparent calc(55% + 1px),
+      transparent calc(65% - 1px),
+      rgba(255, 255, 255, 0.4) calc(65% - 1px),
+      rgba(255, 255, 255, 0.4) calc(65% + 1px),
+      transparent calc(65% + 1px),
+      transparent calc(75% - 1px),
+      rgba(255, 255, 255, 0.4) calc(75% - 1px),
+      rgba(255, 255, 255, 0.4) calc(75% + 1px),
+      transparent calc(75% + 1px),
+      transparent calc(85% - 1px),
+      rgba(255, 255, 255, 0.4) calc(85% - 1px),
+      rgba(255, 255, 255, 0.4) calc(85% + 1px),
+      transparent calc(85% + 1px),
+      transparent calc(95% - 1px),
+      rgba(255, 255, 255, 0.4) calc(95% - 1px),
+      rgba(255, 255, 255, 0.4) calc(95% + 1px),
+      transparent calc(95% + 1px),
+      transparent 100%),
+    /* Field texture - subtle grass pattern */
+    repeating-linear-gradient(45deg,
+      rgba(40, 80, 20, 0.1) 0px,
+      transparent 2px,
+      transparent 4px,
+      rgba(40, 80, 20, 0.1) 4px);
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+/* Add overlay for better contrast on content */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Pixelated border utility */
+.pixel-border {
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 0 4px #fff,
+    0 0 0 6px #000;
+  image-rendering: pixelated;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
