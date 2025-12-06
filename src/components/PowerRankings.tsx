@@ -38,34 +38,38 @@ export function PowerRankings({ userId, onClose }: { userId: string; onClose: ()
                 timed_highscore: myStats?.timed_highscore || 0
             };
 
-            // 2. Get friends' stats
+            // 2. Get accepted friends' stats
+            // Query for friends where (user_id=me OR friend_id=me) AND status='accepted'
             const { data: friendsData } = await supabase
                 .from('friends')
                 .select(`
-          friend:friend_id (
-            id,
-            username,
-            avatar_url
-          )
-        `)
-                .eq('user_id', userId);
+                    user_id,
+                    friend_id,
+                    user:user_id (id, username, avatar_url),
+                    friend:friend_id (id, username, avatar_url)
+                `)
+                .or(`user_id.eq.${userId},friend_id.eq.${userId}`)
+                .eq('status', 'accepted');
 
             let friendsEntries: Ranking[] = [];
 
             if (friendsData) {
                 friendsEntries = await Promise.all(
                     friendsData.map(async (item: any) => {
-                        const friend = item.friend;
+                        // Determine which profile is the "friend"
+                        const isUserInitiator = item.user_id === userId;
+                        const friendProfile = isUserInitiator ? item.friend : item.user;
+
                         const { data: stats } = await supabase
                             .from('game_stats')
                             .select('timed_highscore')
-                            .eq('user_id', friend.id)
+                            .eq('user_id', friendProfile.id)
                             .single();
 
                         return {
-                            id: friend.id,
-                            username: friend.username,
-                            avatar_url: friend.avatar_url,
+                            id: friendProfile.id,
+                            username: friendProfile.username,
+                            avatar_url: friendProfile.avatar_url,
                             timed_highscore: stats?.timed_highscore || 0
                         };
                     })
