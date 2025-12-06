@@ -15,6 +15,8 @@ export function TimedMode() {
 
     const inputRef = useRef<HTMLInputElement>(null);
 
+    const [usedPlayerIds, setUsedPlayerIds] = useState<Set<string>>(new Set());
+
     useEffect(() => {
         let interval: any = null;
         if (isActive && timeLeft > 0) {
@@ -33,7 +35,8 @@ export function TimedMode() {
         setTimeLeft(60);
         setIsActive(true);
         setIsGameOver(false);
-        loadNewPlayer();
+        setUsedPlayerIds(new Set());
+        loadNewPlayer(new Set());
         setTimeout(() => inputRef.current?.focus(), 100);
     };
 
@@ -63,10 +66,24 @@ export function TimedMode() {
         }
     };
 
-    const loadNewPlayer = () => {
+    const loadNewPlayer = (currentUsedIds?: Set<string>) => {
+        const idsToExclude = currentUsedIds || usedPlayerIds;
         const difficulty = pickRandomDifficulty();
-        const player = pickRandomPlayer(allPlayers, difficulty);
-        setCurrentPlayer(player);
+
+        // Filter players that haven't been used
+        const availablePlayers = allPlayers.filter(p => !idsToExclude.has(p.name + p.college)); // using name+college as unique key since no ID
+
+        // If we ran out of players (unlikely), reset used list
+        if (availablePlayers.length === 0) {
+            const player = pickRandomPlayer(allPlayers, difficulty);
+            setCurrentPlayer(player);
+            setUsedPlayerIds(new Set([player.name + player.college]));
+        } else {
+            const player = pickRandomPlayer(availablePlayers, difficulty);
+            setCurrentPlayer(player);
+            setUsedPlayerIds(prev => new Set(prev).add(player.name + player.college));
+        }
+
         setGuess("");
         setFeedback(null);
     };
