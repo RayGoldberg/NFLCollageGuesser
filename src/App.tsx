@@ -102,7 +102,7 @@ function App() {
         {/* Friends Modal */}
         {showFriends && (
           <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-md relative">
+            <div className="w-full max-w-md relative h-[600px] max-h-[80vh]">
               <button
                 onClick={() => setShowFriends(false)}
                 className="absolute -top-4 -right-4 w-8 h-8 bg-red-600 border-2 border-white text-white font-bold flex items-center justify-center rounded-full z-10 hover:bg-red-700"
