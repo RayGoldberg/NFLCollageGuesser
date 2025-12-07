@@ -193,7 +193,7 @@ export function FriendsList({ userId }: { userId: string }) {
                         value={newFriendUsername}
                         onChange={(e) => setNewFriendUsername(e.target.value)}
                         placeholder="USERNAME..."
-                        className="flex-1 p-2 bg-slate-700 text-white border-2 border-slate-500 text-sm uppercase focus:border-yellow-400 outline-none"
+                        className="flex-1 p-2 bg-slate-700 text-white border-2 border-slate-500 text-sm focus:border-yellow-400 outline-none"
                     />
                     <button
                         type="submit"
