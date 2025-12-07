@@ -97,7 +97,7 @@ export function LineupGrid({ offense, guesses, onGuessChange, slotResults }: Lin
     <div className="w-full overflow-x-auto pb-4">
       {/* Football Field Container */}
       <div
-        className="relative min-w-[900px] h-[600px] border-4 border-white shadow-2xl mx-auto overflow-hidden"
+        className="relative w-full min-w-[600px] max-w-5xl h-[600px] border-4 border-white shadow-2xl mx-auto overflow-hidden"
         style={{
           background: `
             repeating-linear-gradient(90deg,
@@ -164,17 +164,17 @@ export function LineupGrid({ offense, guesses, onGuessChange, slotResults }: Lin
         {/* Formation Container */}
         <div className="relative w-full h-full z-10">
 
-          {/* WR1 (Far Left) */}
-          {renderSlot(wr1, "left-[8%] top-[35%]")}
+          {/* WR1 (Far Left) - Moved in to 16% */}
+          {renderSlot(wr1, "left-[16%] top-[35%]")}
 
-          {/* TE (Left side of line) */}
-          {renderSlot(te, "left-[35%] top-[50%]")}
+          {/* TE (Left side of line) - Moved in to 32% */}
+          {renderSlot(te, "left-[32%] top-[50%]")}
 
-          {/* WR2 (Right) */}
-          {renderSlot(wr2, "left-[75%] top-[40%]")}
+          {/* WR2 (Right) - Moved in to 68% */}
+          {renderSlot(wr2, "left-[68%] top-[40%]")}
 
-          {/* WR3 (Far Right) */}
-          {renderSlot(wr3, "left-[92%] top-[60%]")}
+          {/* WR3 (Far Right) - Moved in to 84% */}
+          {renderSlot(wr3, "left-[84%] top-[60%]")}
 
           {/* Backfield */}
 
