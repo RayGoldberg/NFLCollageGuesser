@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { supabase } from "../supabaseClient";
 import { Player } from "../types";
 import { allPlayers, teams } from "../data/teams";
-import { isCorrectCollege, pickRandomDifficulty, pickRandomPlayer } from "../utils/gameLogic";
+import { isCorrectCollege, pickRandomPlayer } from "../utils/gameLogic";
 
 export function TimedMode() {
     const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null);
@@ -66,18 +66,16 @@ export function TimedMode() {
     };
 
     const loadNewPlayer = () => {
-        const difficulty = pickRandomDifficulty();
-
         // Filter players that haven't been used
         const availablePlayers = allPlayers.filter(p => !usedPlayerIdsRef.current.has(p.name + p.college));
 
         // If we ran out of players (unlikely), reset used list
         if (availablePlayers.length === 0) {
-            const player = pickRandomPlayer(allPlayers, difficulty);
+            const player = pickRandomPlayer(allPlayers);
             setCurrentPlayer(player);
             usedPlayerIdsRef.current = new Set([player.name + player.college]);
         } else {
-            const player = pickRandomPlayer(availablePlayers, difficulty);
+            const player = pickRandomPlayer(availablePlayers);
             setCurrentPlayer(player);
             usedPlayerIdsRef.current.add(player.name + player.college);
         }
